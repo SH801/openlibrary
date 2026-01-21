@@ -73,7 +73,7 @@ class openlibrary:
             # When running the library, we ALSO pass os.environ
             # so GDAL knows where its drivers and data are
             subprocess.run(
-                [sys.executable, "-m", f"{lib_name}.core", self.local_yml],
+                [sys.executable, "-m", lib_name, self.local_yml],
                 check=True,
                 env=os.environ
             )            

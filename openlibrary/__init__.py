@@ -1,1 +1,1 @@
-from .core import openlibrary
+__version__ = "0.1.0"
