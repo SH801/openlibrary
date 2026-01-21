@@ -89,16 +89,22 @@ class openlibrary:
         return importlib.util.find_spec(name) is not None
 
     def install_lib(self, url):
+        self.log(f"Attempting to install: {url}")
         try:
-            # Use os.environ to ensure we pick up any shell env variables
-            subprocess.check_call(
-                [sys.executable, "-m", "pip", "install", f"git+{url}"],
-                env=os.environ
+            # We use subprocess.run so we can catch the exit code
+            # We pass os.environ so GDAL/PATH variables are visible to Pip
+            subprocess.run(
+                [sys.executable, "-m", "pip", "install", "--force-reinstall", f"git+{url}"],
+                env=os.environ,
+                check=True
             )
+            self.log("Installation successful.")
             return True
-        except subprocess.CalledProcessError:
+        except subprocess.CalledProcessError as e:
+            self.log(f"CRITICAL: Installation failed.")
+            # This will show you exactly why it failed in the terminal
             return False
-
+        
 def main():
     if len(sys.argv) < 2:
         print("Usage: openlibrary [url_to_yml | path_to_yml]")
