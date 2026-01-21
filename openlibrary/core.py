@@ -70,7 +70,13 @@ class openlibrary:
         self.log(f"Running: {lib_name} {self.local_yml}")
         try:
             # subprocess.run handles the terminal command execution
-            subprocess.run([lib_name, self.local_yml], check=True)
+            # When running the library, we ALSO pass os.environ
+            # so GDAL knows where its drivers and data are
+            subprocess.run(
+                [sys.executable, "-m", f"{lib_name}.core", self.local_yml],
+                check=True,
+                env=os.environ
+            )            
         except subprocess.CalledProcessError as e:
             print(f"Execution failed: {e}")
         finally:
@@ -84,7 +90,11 @@ class openlibrary:
 
     def install_lib(self, url):
         try:
-            subprocess.check_call([sys.executable, "-m", "pip", "install", f"git+{url}"])
+            # Use os.environ to ensure we pick up any shell env variables
+            subprocess.check_call(
+                [sys.executable, "-m", "pip", "install", f"git+{url}"],
+                env=os.environ
+            )
             return True
         except subprocess.CalledProcessError:
             return False
