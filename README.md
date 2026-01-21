@@ -1,7 +1,7 @@
 # openlibrary - bootstrapper library for processing YML files
 
 ## Overview
-The `openlibrary` library provides a bootstrapper library that loads a particular library referenced in a `yml` URL and then runs the library on the `yml` file. It can be used to create separate custom Python libraries that operate on parameters stored in a `yml` file while ensuring the necessary external library is installed at runtime.
+The `openlibrary` library provides a bootstrapper library that loads a particular library referenced in a `yml` file/url and then runs the library on the `yml` file. It can be used to create separate custom Python libraries that operate on parameters stored in a `yml` file while ensuring the necessary external library is installed at runtime.
 
 For example, the following command would install the Python library referenced in `opendem_conf.yml` and then run the library using `opendem_conf.yml` as the configuration file:
 ```
